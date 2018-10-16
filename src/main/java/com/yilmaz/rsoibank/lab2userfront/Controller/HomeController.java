@@ -1,8 +1,8 @@
 package com.yilmaz.rsoibank.lab2userfront.Controller;
 
 
+import com.yilmaz.rsoibank.lab2userfront.UserService.UserService;
 import com.yilmaz.rsoibank.lab2userfront.domain.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 
-    /*private final UserService userService;
+    private final UserService userService;
 
     public HomeController(UserService userService) {
         this.userService = userService;
     }
-*/
+
     @RequestMapping("/")
     public String home() {
         return "redirect:/index";
@@ -36,14 +36,14 @@ public class HomeController {
         model.addAttribute("user",user);
         return "signup";
     }
-   /* @RequestMapping(value = "/signup",method = RequestMethod.POST)
+    @RequestMapping(value = "/signup",method = RequestMethod.POST)
     public String  signupPost(@ModelAttribute("user")User user, Model model){
         if (userService.checkUserExists(user.getUserName(),user.getEmail())){
             if(userService.checkEmailExists(user.getEmail())){
                 model.addAttribute("emailExits",true);
             }
             if(userService.checkUserNameExists(user.getUserName())){
-                model.addAttribute("usernameExists",true);
+                model.addAttribute("userNameExists",true);
             }
             return "signup";
         }else{
@@ -51,5 +51,5 @@ public class HomeController {
 
             return "redirect:/";
         }
-    }*/
+    }
 }

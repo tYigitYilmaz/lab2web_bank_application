@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
-    public void save(User user){
+    public void save(User user) {
         userDao.save(user);
     }
 
@@ -24,26 +24,19 @@ public class UserServiceImpl implements UserService {
         return userDao.findByUserName(userName);
     }
 
-    public User findByEmail(String email){
+    public User findByEmail(String email) {
         return userDao.findByEmail(email);
     }
-    public boolean checkUserExists(String userName, String email){
-        if (checkUserNameExists(userName) || checkEmailExists(userName)){
-            return true;
-        }else {
-            return false;
-        }
+
+    public boolean checkUserExists(String userName, String email) {
+        return checkUserNameExists(userName) || checkEmailExists(userName);
     }
-    public boolean checkUserNameExists(String userName){
-        if(null != userDao.findByUserName(userName)){
-            return true;
-        }
-        return false;
+
+    public boolean checkUserNameExists(String userName) {
+        return null != userDao.findByUserName(userName);
     }
-    public boolean checkEmailExists(String email){
-        if(null != userDao.findByEmail(email)){
-            return true;
-        }
-        return false;
+
+    public boolean checkEmailExists(String email) {
+        return null != userDao.findByEmail(email);
     }
 }
