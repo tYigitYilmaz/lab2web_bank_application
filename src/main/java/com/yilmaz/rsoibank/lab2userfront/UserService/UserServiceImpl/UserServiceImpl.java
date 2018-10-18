@@ -20,20 +20,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUserName(String userName) {
-        return userDao.findByUserName(userName);
+    public User findByUsername(String username) {
+        return userDao.findByUsername(username);
     }
 
     public User findByEmail(String email) {
         return userDao.findByEmail(email);
     }
 
-    public boolean checkUserExists(String userName, String email) {
-        return checkUserNameExists(userName) || checkEmailExists(userName);
+    public boolean checkUserExists(String username, String email) {
+        return checkUsernameExists(username) || checkEmailExists(username);
     }
 
-    public boolean checkUserNameExists(String userName) {
-        return null != userDao.findByUserName(userName);
+    public boolean checkUsernameExists(String username) {
+        return null != userDao.findByUsername(username);
     }
 
     public boolean checkEmailExists(String email) {
