@@ -3,7 +3,6 @@ package com.yilmaz.rsoibank.lab2userfront.domain;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import com.yilmaz.rsoibank.lab2userfront.domain.SavingsAccount;
 
 
 @Entity

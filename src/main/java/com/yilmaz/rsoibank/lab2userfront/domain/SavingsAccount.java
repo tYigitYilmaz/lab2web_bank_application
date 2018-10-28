@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.yilmaz.rsoibank.lab2userfront.domain.SavingsTransaction;
 
 @Entity
 public class SavingsAccount {

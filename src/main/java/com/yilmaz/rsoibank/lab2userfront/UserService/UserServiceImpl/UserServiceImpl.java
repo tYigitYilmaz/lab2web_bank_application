@@ -1,19 +1,38 @@
 package com.yilmaz.rsoibank.lab2userfront.UserService.UserServiceImpl;
 
 
-import com.yilmaz.rsoibank.lab2userfront.Dao.UserDao;
+import com.yilmaz.rsoibank.lab2userfront.UserService.AccountService;
+import com.yilmaz.rsoibank.lab2userfront.dao.RoleDao;
+import com.yilmaz.rsoibank.lab2userfront.dao.UserDao;
 import com.yilmaz.rsoibank.lab2userfront.UserService.UserService;
 import com.yilmaz.rsoibank.lab2userfront.domain.User;
+import com.yilmaz.rsoibank.lab2userfront.domain.security.UserRole;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Set;
+
+@Transactional
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserDao userDao;
+    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
-    public UserServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private RoleDao roleDao;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AccountService accountService;
 
     public void save(User user) {
         userDao.save(user);
@@ -26,6 +45,29 @@ public class UserServiceImpl implements UserService {
 
     public User findByEmail(String email) {
         return userDao.findByEmail(email);
+    }
+
+
+    public User createUser(User user, Set<UserRole>userRoles){
+        User localUser = userDao.findByUsername(user.getUsername());
+        if (localUser != null){
+            LOG.info("User with username{} already exist.Nothing will be done.", user.getUsername());
+        }else {
+            String encryptedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encryptedPassword);
+
+            for (UserRole ur : userRoles){
+                roleDao.save(ur.getRole());
+            }
+
+            user.getUserRoles().addAll(userRoles);
+
+            user.setPrimaryAccount(accountService.createPrimaryAccount());
+            user.setSavingsAccount(accountService.createSavingsAccount());
+
+            localUser = userDao.save(user);
+        }
+        return localUser;
     }
 
     public boolean checkUserExists(String username, String email) {

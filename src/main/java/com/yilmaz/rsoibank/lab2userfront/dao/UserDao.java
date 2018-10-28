@@ -1,4 +1,4 @@
-package com.yilmaz.rsoibank.lab2userfront.Dao;
+package com.yilmaz.rsoibank.lab2userfront.dao;
 
 
 
