@@ -65,6 +65,7 @@ public class HomeController {
             return "redirect:/";
         }
     }
+
    @RequestMapping("/userFront")
     public String userFront(Principal principal, Model model) {
         User user = userService.findByUsername(principal.getName());
