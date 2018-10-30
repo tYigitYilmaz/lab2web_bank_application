@@ -22,17 +22,42 @@ public class UserServiceImpl implements UserService {
 
     private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
-    @Autowired
+
     private UserDao userDao;
-
-    @Autowired
     private RoleDao roleDao;
-
-    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    private AccountService accountService;
 
     @Autowired
-    private AccountService accountService;
+    public void setUserDao(UserDao userDao){
+        this.userDao = userDao;
+    }
+    public UserDao getUserDaoe() {
+        return userDao;
+    }
+    @Autowired
+    public void setRoleDao(RoleDao roleDao){
+        this.roleDao = roleDao;
+    }
+    public RoleDao getRoleDao() {
+        return roleDao;
+    }
+
+    @Autowired
+    public void setBCryptPasswordEncoder(BCryptPasswordEncoder passwordEncoder){
+        this.passwordEncoder = passwordEncoder;
+    }
+    public BCryptPasswordEncoder getPasswordEncoder() {
+        return passwordEncoder;
+    }
+
+    @Autowired
+    public void setAccountService(AccountService accountService){
+        this.accountService = accountService;
+    }
+    public AccountService getAccountService() {
+        return accountService;
+    }
 
     public void save(User user) {
         userDao.save(user);

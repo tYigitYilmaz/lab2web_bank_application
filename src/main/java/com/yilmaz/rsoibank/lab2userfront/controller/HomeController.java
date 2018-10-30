@@ -22,11 +22,24 @@ import java.util.Set;
 @Controller
 public class HomeController {
 
-    @Autowired
     private UserService userService;
+    private RoleDao roleDao;
 
     @Autowired
-    private RoleDao roleDao;
+    public void setUserService(UserService userService){
+        this.userService = userService;
+    }
+    public UserService getUserService() {
+        return userService;
+    }
+
+    @Autowired
+    public void setRoleDao(RoleDao roleDao){
+        this.roleDao = roleDao;
+    }
+    public RoleDao getroleDao() {
+        return roleDao;
+    }
 
     @RequestMapping("/")
     public String home() {

@@ -15,10 +15,15 @@ public class UserSecurityService implements UserDetailsService {
 
     /** the application Logger */
     private static final Logger LOG = LoggerFactory.getLogger(UserSecurityService.class);
-
+    private UserDao userDao;
 
     @Autowired
-    private UserDao userDao;
+    public void setUserDao(UserDao userDao){
+        this.userDao = userDao;
+    }
+    public UserDao getUserDao() {
+        return userDao;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

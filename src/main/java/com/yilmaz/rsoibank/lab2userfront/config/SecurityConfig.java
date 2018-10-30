@@ -21,21 +21,7 @@ import java.security.SecureRandom;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private Environment env;
-
-
-    @Autowired
-    private UserSecurityService userSecurityService;
-
-
     private static final String SALT = "salt"; // Salt should be protected
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(12, new SecureRandom(SALT.getBytes()));
-    }
-
     private static final String[] PUBLIC_MATCHERS = {
             "/webjars/**",
             "/css/**",
@@ -49,6 +35,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/signup"
     };
 
+
+    private Environment env;
+    private UserSecurityService userSecurityService;
+
+    public SecurityConfig (Environment env, UserSecurityService userSecurityService){
+        this.env = env;
+        this.userSecurityService = userSecurityService;
+    }
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(12, new SecureRandom(SALT.getBytes()));
+    }
+
+
+
+
     /*@Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/api/v1/signup");
@@ -58,21 +60,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-        .authorizeRequests()
-        .antMatchers(PUBLIC_MATCHERS).
-        permitAll().anyRequest().authenticated();
+                .authorizeRequests()
+                .antMatchers(PUBLIC_MATCHERS).
+                permitAll().anyRequest().authenticated();
 
         http
-        .csrf().disable().cors().disable()
-        .formLogin().failureUrl("/index?error").defaultSuccessUrl("/userFront").loginPage("/index").permitAll()
-        .and()
-        .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/index?logout").deleteCookies("remember-me").permitAll()
-        .and()
-        .rememberMe();
+                .csrf().disable().cors().disable()
+                .formLogin().failureUrl("/index?error").defaultSuccessUrl("/userFront").loginPage("/index").permitAll()
+                .and()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/index?logout").deleteCookies("remember-me").permitAll()
+                .and()
+                .rememberMe();
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         //auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
         auth.userDetailsService(userSecurityService).passwordEncoder(passwordEncoder());
     }

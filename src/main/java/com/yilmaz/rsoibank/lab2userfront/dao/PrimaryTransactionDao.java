@@ -1,0 +1,12 @@
+package com.yilmaz.rsoibank.lab2userfront.dao;
+
+import com.yilmaz.rsoibank.lab2userfront.domain.PrimaryTransaction;
+import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
+
+public interface PrimaryTransactionDao extends CrudRepository<PrimaryTransaction, Long>{
+
+    List<PrimaryTransaction> findAll();
+
+}
