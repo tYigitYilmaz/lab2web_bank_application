@@ -69,7 +69,7 @@ public class AccountController {
         User user = userService.findByUsername(principal.getName());
         SavingsAccount savingsAccount = user.getSavingsAccount();
 
-        model.addAttribute("savingAccount", savingsAccount);
+        model.addAttribute("savingsAccount", savingsAccount);
         model.addAttribute("savingsTransactionList", savingsTransactionList);
 
         return "savingsAccount";
